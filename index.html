@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartKisan Market – Empowering Farmers, Connecting Markets</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <a href="#home" class="logo" data-nav="home"><i class="fa-solid fa-seedling"></i> SmartKisan <span>Market</span></a>
+  <button id="navToggle" class="nav-toggle" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
+  <nav id="navLinks" class="nav-links">
+    <a href="#home" data-nav="home">Home</a>
+    <a href="#market" data-nav="market">Marketplace</a>
+    <a href="#prices" data-nav="prices">Prices</a>
+    <a href="#predict" data-nav="predict">Prediction</a>
+    <a href="#farmer" data-nav="farmer">Farmer</a>
+    <a href="#orders" data-nav="orders">Orders</a>
+    <a href="#auth" data-nav="auth" id="authLink" class="btn btn-small">Login</a>
+  </nav>
+</header>
+
+<main>
+<!-- HOME -->
+<section id="home" class="page active">
+  <div class="hero">
+    <div class="hero-content">
+      <span class="badge">🌾 Farm-to-buyer marketplace</span>
+      <h1>Empowering Farmers, Connecting Markets</h1>
+      <p>Sell crops directly, compare mandi prices and plan smarter with demo price estimates. No middlemen.</p>
+      <div class="hero-btns">
+        <a href="#market" data-nav="market" class="btn">Explore Marketplace</a>
+        <a href="#farmer" data-nav="farmer" class="btn btn-outline">Sell Your Crops</a>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="stats-grid" id="homeStats"></div>
+    <h2 class="title">Featured Products</h2>
+    <div class="grid" id="featuredGrid"></div>
+    <h2 class="title">How It Works</h2>
+    <div class="steps">
+      <div class="step"><i class="fa-solid fa-user-plus"></i><h3>1. Register</h3><p>Join as a Farmer or Buyer (simulated login).</p></div>
+      <div class="step"><i class="fa-solid fa-wheat-awn"></i><h3>2. List or Browse</h3><p>Farmers add crops; buyers search and filter.</p></div>
+      <div class="step"><i class="fa-solid fa-chart-line"></i><h3>3. Compare Prices</h3><p>Check demo mandi prices and trend estimates.</p></div>
+      <div class="step"><i class="fa-solid fa-cart-shopping"></i><h3>4. Order</h3><p>Place a demo order and track its status.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARKETPLACE + BUYER DASHBOARD -->
+<section id="market" class="page">
+  <div class="container">
+    <h2 class="title">Digital Marketplace &amp; Buyer Dashboard</h2>
+    <div class="stats-grid" id="buyerStats"></div>
+    <div class="filters">
+      <input type="search" id="searchInput" placeholder="🔍 Search crops by name...">
+      <select id="catFilter"><option value="all">All Categories</option></select>
+      <select id="locFilter"><option value="all">All Locations</option></select>
+      <select id="sortSelect">
+        <option value="none">Sort by price</option>
+        <option value="asc">Low to High</option>
+        <option value="desc">High to Low</option>
+      </select>
+      <button class="btn btn-outline" id="resetFilters">Reset</button>
+    </div>
+    <div class="grid" id="marketGrid"></div>
+  </div>
+</section>
+
+<!-- PRICE COMPARISON -->
+<section id="prices" class="page">
+  <div class="container">
+    <h2 class="title">Market Price Comparison</h2>
+    <p class="note"><i class="fa-solid fa-circle-info"></i> All prices and market names are <strong>demonstration data</strong>, not verified.</p>
+    <div class="filters"><select id="priceCrop"></select></div>
+    <div class="grid price-cards" id="priceCards"></div>
+    <h3 class="sub">All Crops (₹ per quintal – demo)</h3>
+    <div class="table-wrap"><table id="priceTable"></table></div>
+  </div>
+</section>
+
+<!-- PREDICTION -->
+<section id="predict" class="page">
+  <div class="container">
+    <h2 class="title">Demo Price Prediction</h2>
+    <p class="note warn"><i class="fa-solid fa-triangle-exclamation"></i> Demo estimate only. No real AI model is connected. Values come from a simple trend calculation on sample data.</p>
+    <div class="filters"><select id="predictCrop"></select></div>
+    <div class="card chart-card"><canvas id="priceChart"></canvas></div>
+    <div class="card" id="predictInfo"></div>
+  </div>
+</section>
+
+<!-- FARMER DASHBOARD -->
+<section id="farmer" class="page">
+  <div class="container">
+    <h2 class="title">Farmer Dashboard</h2>
+    <div class="stats-grid" id="farmerStats"></div>
+    <div class="two-col">
+      <form id="cropForm" class="card" novalidate>
+        <h3>Add New Crop</h3>
+        <label>Crop Name<input type="text" id="fName" placeholder="e.g. Wheat"></label>
+        <label>Category
+          <select id="fCat"><option>Cereal</option><option>Vegetable</option><option>Oilseed</option></select>
+        </label>
+        <div class="row">
+          <label>Quantity (quintals)<input type="number" id="fQty" min="1" placeholder="50"></label>
+          <label>Price per quintal (₹)<input type="number" id="fPrice" min="1" placeholder="2300"></label>
+        </div>
+        <label>Location<input type="text" id="fLoc" placeholder="e.g. Karnal, Haryana"></label>
+        <label>Description<textarea id="fDesc" rows="3" placeholder="Quality, harvest date, etc."></textarea></label>
+        <label>Crop Image (optional, under 300 KB)<input type="file" id="fImg" accept="image/*"></label>
+        <p class="error" id="formError"></p>
+        <button type="submit" class="btn">Add Listing</button>
+      </form>
+      <div class="card">
+        <h3>My Listings</h3>
+        <div id="myListings"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORDERS -->
+<section id="orders" class="page">
+  <div class="container">
+    <h2 class="title">Order Management</h2>
+    <div class="table-wrap"><table id="orderTable"></table></div>
+    <div id="orderEmpty" class="empty"></div>
+  </div>
+</section>
+
+<!-- AUTH -->
+<section id="auth" class="page">
+  <div class="container narrow">
+    <div class="card">
+      <p class="note warn"><i class="fa-solid fa-lock"></i> Simulated authentication for demo purposes only. Not production-secure. Passwords are never stored.</p>
+      <div class="tabs">
+        <button class="tab active" data-tab="login">Login</button>
+        <button class="tab" data-tab="register">Register</button>
+      </div>
+      <form id="loginForm" novalidate>
+        <label>Email<input type="email" id="lEmail"></label>
+        <label>Password<input type="password" id="lPass" autocomplete="off"></label>
+        <p class="error" id="loginError"></p>
+        <button class="btn" type="submit">Login</button>
+      </form>
+      <form id="registerForm" class="hidden" novalidate>
+        <label>Name<input type="text" id="rName"></label>
+        <label>Email<input type="email" id="rEmail"></label>
+        <label>Password (min 6 chars)<input type="password" id="rPass" autocomplete="off"></label>
+        <label>Role<select id="rRole"><option value="Farmer">Farmer</option><option value="Buyer">Buyer</option></select></label>
+        <p class="error" id="registerError"></p>
+        <button class="btn" type="submit">Create Account</button>
+      </form>
+      <div id="userBox" class="hidden"></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div><strong><i class="fa-solid fa-seedling"></i> SmartKisan Market</strong><br>Empowering Farmers, Connecting Markets.</div>
+  <div>Hackathon HACK-02 · Demo project · All data is sample data.</div>
+</footer>
+
+<div id="modal" class="modal hidden"><div class="modal-box" id="modalBox"></div></div>
+<div id="toast" class="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
